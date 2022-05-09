@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Creating company table -->
+    <changeSet author="Abubakar" id="1">
+        <createTable tableName="company">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(80)"/>
+            <column name="parent_company_id" type="INT">
+                <constraints foreignKeyName="fk_company_id" references="company(id)"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_on" type="timestamp"/>
+            <column name="updated_by" type="VARCHAR(255)"/>
+            <column name="updated_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+    <!-- Creating station table -->
+    <changeSet author="Abubakar" id="2">
+        <createTable tableName="station">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(80)"/>
+            <column name="latitude" type="DECIMAL(9, 7)"/>
+            <column name="longitude" type="DECIMAL(9, 7)"/>
+            <column name="company_id" type="INT">
+                <constraints foreignKeyName="fk_station_company_id" references="company(id)"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_on" type="timestamp"/>
+            <column name="updated_by" type="VARCHAR(255)"/>
+            <column name="updated_on" type="timestamp"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
