@@ -11,6 +11,7 @@ import electric.vehicle.charging.station.management.model.Station;
 import electric.vehicle.charging.station.management.repository.StationRepository;
 import electric.vehicle.charging.station.management.service.CompanyService;
 import electric.vehicle.charging.station.management.service.StationService;
+import electric.vehicle.charging.station.management.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -139,7 +140,7 @@ public class StationServiceImpl implements StationService {
         station.setName(request.getName());
         station.setLatitude(request.getLatitude());
         station.setLongitude(request.getLongitude());
-        station.setCreatedBy("System");
+        station.setCreatedBy(Constants.SYSTEM_USER);
         station.setCreationDate(LocalDateTime.now());
     }
 
@@ -148,7 +149,7 @@ public class StationServiceImpl implements StationService {
         station.setLatitude(requestDto.getLatitude());
         station.setLongitude(requestDto.getLongitude());
         station.setCompany(company);
-        station.setUpdatedBy("System");
+        station.setUpdatedBy(Constants.SYSTEM_USER);
         station.setUpdatedDate(LocalDateTime.now());
     }
 }

@@ -20,6 +20,7 @@ services:
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
+    restart: always
     depends_on: 
       - postgres
     ports:
@@ -33,6 +34,7 @@ services:
 networks:
     db_network:
       driver: bridge
+      name: station_management_db_network
     
 volumes:
   pg-dataset:
