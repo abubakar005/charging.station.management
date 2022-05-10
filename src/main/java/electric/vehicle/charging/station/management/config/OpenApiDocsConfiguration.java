@@ -20,17 +20,17 @@ public class OpenApiDocsConfiguration {
                         .version("v1.0")
                         .contact(new Contact()
                                 .name("Abu Bakar")
-                                .url("https://github.com/abubakar005/wallet-topup")
+                                .url("https://github.com/abubakar005/charging.station.management")
                                 .email("abubakar.cs@gmail.com"))
                         .termsOfService("TOC")
                         .license(new License().name("License").url("#"))
                 );
     }
 
-    //@Bean
+    @Bean
     public GroupedOpenApi groupOpenApi() {
         String paths[] = {"/api/v1/**"};
-        String packagesToScan[] = {"wallet.topup.resource"};
+        String packagesToScan[] = {"electric.vehicle.charging.station.management.resource"};
         return GroupedOpenApi.builder()
                 .group("charging.station.management")
                 .pathsToMatch(paths)

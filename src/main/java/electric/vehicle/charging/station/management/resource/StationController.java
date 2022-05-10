@@ -2,6 +2,7 @@ package electric.vehicle.charging.station.management.resource;
 
 import electric.vehicle.charging.station.management.dto.CompanyStationDto;
 import electric.vehicle.charging.station.management.dto.NewStationRequestDto;
+import electric.vehicle.charging.station.management.dto.UpdateStationRequestDto;
 import electric.vehicle.charging.station.management.model.Station;
 import electric.vehicle.charging.station.management.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class StationController {
     @ResponseStatus(HttpStatus.CREATED)
     public Station addStation(@RequestBody NewStationRequestDto requestDto) {
         return stationService.createNewStation(requestDto);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Station updateStation(@RequestBody UpdateStationRequestDto requestDto) {
+        return stationService.updateNewStation(requestDto);
     }
 
     @GetMapping("/{id}")

@@ -1,13 +1,12 @@
 package electric.vehicle.charging.station.management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -28,16 +27,6 @@ public class Company extends AbstractAuditing {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_company_id")
     private Company parentCompany;
-
-   /* @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentCompany")
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Company> children;
-
-    @JsonIgnore
-    public Set<Company> getChildren() {
-        return children;
-    }*/
 
     @Override
     public boolean equals(Object o) {

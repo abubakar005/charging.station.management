@@ -1,6 +1,7 @@
 package electric.vehicle.charging.station.management.resource;
 
 import electric.vehicle.charging.station.management.dto.NewCompanyRequestDto;
+import electric.vehicle.charging.station.management.dto.UpdateCompanyRequestDto;
 import electric.vehicle.charging.station.management.model.Company;
 import electric.vehicle.charging.station.management.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,12 @@ public class CompanyController {
     @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(@RequestBody NewCompanyRequestDto requestDto) {
         return companyService.createNewCompany(requestDto);
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Company updateCompany(@RequestBody UpdateCompanyRequestDto requestDto) {
+        return companyService.updateCompany(requestDto);
     }
 
     @GetMapping

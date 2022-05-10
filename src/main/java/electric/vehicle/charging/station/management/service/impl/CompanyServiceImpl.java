@@ -1,6 +1,7 @@
 package electric.vehicle.charging.station.management.service.impl;
 
 import electric.vehicle.charging.station.management.dto.NewCompanyRequestDto;
+import electric.vehicle.charging.station.management.dto.UpdateCompanyRequestDto;
 import electric.vehicle.charging.station.management.enums.Error;
 import electric.vehicle.charging.station.management.exception.ElementNotFoundException;
 import electric.vehicle.charging.station.management.model.Company;
@@ -23,7 +24,7 @@ public class CompanyServiceImpl implements CompanyService {
     public Company createNewCompany(NewCompanyRequestDto request) {
 
         Company company = new Company();
-        newCompany(company, request);
+        NewCompanyRequestDtoToCompany(company, request);
 
         Optional<Long> parentCompanyId = Optional.ofNullable(request.getParentCompanyId());
 
@@ -60,13 +61,44 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    public Company updateCompany(UpdateCompanyRequestDto request) {
+
+        Company company = getCompanyById(request.getId());
+        Company parent = null;
+
+        if(request.getParentCompanyId() != null) {
+            Optional<Company> parentOptional = companyRepository.findById(request.getParentCompanyId());
+
+            if(!parentOptional.isPresent())
+                throw new ElementNotFoundException(Error.PARENT_COMPANY_NOT_FOUND.getCode(), String.format(Error.PARENT_COMPANY_NOT_FOUND.getMsg(), request.getParentCompanyId()));
+
+            parent = parentOptional.get();
+
+            if(parent.getParentCompany() != null && parent.getParentCompany().getId() == company.getId())
+                throw new ElementNotFoundException(Error.PARENT_NOT_ALLOWED.getCode(), Error.PARENT_NOT_ALLOWED.getMsg());
+        }
+
+        UpdateCompanyRequestDtoToCompany(company, request, parent);
+        companyRepository.save(company);
+
+        return company;
+    }
+
+    @Override
     public List<Company> getChildsByParentId(long parentCompanyId) {
         return companyRepository.findByParentCompanyId(parentCompanyId);
     }
 
-    private void newCompany(Company company, NewCompanyRequestDto request) {
+    private void NewCompanyRequestDtoToCompany(Company company, NewCompanyRequestDto request) {
         company.setName(request.getName());
         company.setCreatedBy("System");
         company.setCreationDate(LocalDateTime.now());
+    }
+
+    private void UpdateCompanyRequestDtoToCompany(Company company, UpdateCompanyRequestDto request, Company parent) {
+        company.setName(request.getName());
+        company.setParentCompany(parent);
+        company.setUpdatedBy("System");
+        company.setUpdatedDate(LocalDateTime.now());
     }
 }

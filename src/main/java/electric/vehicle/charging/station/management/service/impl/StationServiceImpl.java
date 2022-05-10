@@ -3,6 +3,7 @@ package electric.vehicle.charging.station.management.service.impl;
 import electric.vehicle.charging.station.management.dto.CompanyStationDto;
 import electric.vehicle.charging.station.management.dto.NewStationRequestDto;
 import electric.vehicle.charging.station.management.dto.StationDto;
+import electric.vehicle.charging.station.management.dto.UpdateStationRequestDto;
 import electric.vehicle.charging.station.management.enums.Error;
 import electric.vehicle.charging.station.management.exception.ElementNotFoundException;
 import electric.vehicle.charging.station.management.model.Company;
@@ -30,7 +31,7 @@ public class StationServiceImpl implements StationService {
     public Station createNewStation(NewStationRequestDto request) {
 
         Station station = new Station();
-        newStation(station, request);
+        newStationRequestDtoToStation(station, request);
 
         Company company = companyService.getCompanyById(request.getCompanyId());
 
@@ -39,6 +40,21 @@ public class StationServiceImpl implements StationService {
 
         station.setCompany(company);
         return stationRepository.save(station);
+    }
+
+    @Override
+    public Station updateNewStation(UpdateStationRequestDto request) {
+
+        Station station = getStationById(request.getId());
+        Company company = companyService.getCompanyById(request.getCompanyId());
+
+        if(company == null)
+            throw new ElementNotFoundException(Error.COMPANY_NOT_FOUND.getCode(), String.format(Error.COMPANY_NOT_FOUND.getMsg(), request.getCompanyId()));
+
+        updateStationRequestDtoToStation(station, request, company);
+        stationRepository.save(station);
+
+        return station;
     }
 
     @Override
@@ -119,11 +135,20 @@ public class StationServiceImpl implements StationService {
         return companyStationDtoList;
     }
 
-    private void newStation(Station station, NewStationRequestDto request) {
+    private void newStationRequestDtoToStation(Station station, NewStationRequestDto request) {
         station.setName(request.getName());
         station.setLatitude(request.getLatitude());
         station.setLongitude(request.getLongitude());
         station.setCreatedBy("System");
         station.setCreationDate(LocalDateTime.now());
+    }
+
+    private void updateStationRequestDtoToStation(Station station, UpdateStationRequestDto requestDto, Company company) {
+        station.setName(requestDto.getName());
+        station.setLatitude(requestDto.getLatitude());
+        station.setLongitude(requestDto.getLongitude());
+        station.setCompany(company);
+        station.setUpdatedBy("System");
+        station.setUpdatedDate(LocalDateTime.now());
     }
 }

@@ -7,6 +7,7 @@ public enum Error {
     PARENT_COMPANY_NOT_FOUND(1002, "Parent company not found against the Id %s"),
     COMPANY_NOT_FOUND(1003, "Company not found against the Id %s"),
     STATION_NOT_FOUND(1004, "Station not found against the Id %s"),
+    PARENT_NOT_ALLOWED(1005, "Two companies can not be parent to each other"),
     ;
 
     private final int code;
