@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title> Add New Company </title>
+    <meta charset="UTF-8">
+    <script>
+      var baseurl = "http://localhost:8080/api/v1/company";
+      function addCompany(companyName, parentCompanyId){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", baseurl, true);
+		xmlhttp.setRequestHeader('Content-Type', 'application/json');
+		xmlhttp.send(JSON.stringify({
+			name: companyName,
+			parentCompanyId: parentCompanyId
+		}));
+		
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.status === 201){
+			var company = JSON.parse(xmlhttp.responseText);
+            document.getElementById("addCompanyInfo").innerHTML = "Company added successfully with Id " + company.id;
+			document.getElementById('companyName').value = '';
+			document.getElementById('parentCompanyId').value = '';
+          }
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <h2 style="color:purple"> Add New Company </h2>
+	<label for="companyName"><b>Company Name:</b> </label>
+	<input type="text" id="companyName" name="companyName">
+	<br><br>
+	<label for="parentCompanyId"><b>Parent Company Id:</b> </label>
+	<input type="text" id="parentCompanyId" name="parentCompanyId">
+	<br><br>
+	<button onclick="addCompany(document.getElementById('companyName').value, document.getElementById('parentCompanyId').value)">Add Company</button></br></br>
+    <div id="addCompanyInfo"> </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title> Add New Station </title>
+    <meta charset="UTF-8">
+    <script>
+      var baseurl = "http://localhost:8080/api/v1/station";
+      function addStation(stationName, latitude, longitude, companyId){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("POST", baseurl, true);
+		xmlhttp.setRequestHeader('Content-Type', 'application/json');
+		xmlhttp.send(JSON.stringify({
+			name: stationName,
+			latitude: latitude,
+			longitude: longitude,
+			companyId: companyId
+		}));
+		
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.status === 201){
+			var station = JSON.parse(xmlhttp.responseText);
+            document.getElementById("addStationInfo").innerHTML = "Station added successfully with Id " + station.id;
+			document.getElementById('stationName').value = '';
+			document.getElementById('latitude').value = '';
+			document.getElementById('longitude').value = '';
+			document.getElementById('companyId').value = '';
+          }
+        };
+      }
+    </script>
+  </head>
+  <body>
+    <h2 style="color:purple"> Add New Station </h2>
+	<label for="stationName"><b>Station Name:</b> </label>
+	<input type="text" id="stationName" name="stationName">
+	<br><br>
+	<label for="latitude"><b>Latitude:</b> </label>
+	<input type="text" id="latitude" name="latitude">
+	<br><br>
+	<label for="longitude"><b>Longitude:</b> </label>
+	<input type="text" id="longitude" name="longitude">
+	<br><br>
+	<label for="companyId"><b>Company Id:</b> </label>
+	<input type="text" id="companyId" name="companyId">
+	<br><br>
+	<button onclick="addStation(document.getElementById('stationName').value, document.getElementById('latitude').value, document.getElementById('longitude').value, document.getElementById('companyId').value)">Add Station</button></br></br>
+    <div id="addStationInfo"> </div>
+  </body>
+</html>

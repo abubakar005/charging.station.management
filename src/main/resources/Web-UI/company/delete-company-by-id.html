@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title> Delete Company </title>
+    <meta charset="UTF-8">
+    <script>
+      var baseurl = "http://localhost:8080/api/v1/company/";
+      function deleteCompany(companyId){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("DELETE", baseurl + companyId, true);
+		
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.status === 204){
+            document.getElementById("deleteCompanyInfo").innerHTML = "Company deleted successfully with Id " + companyId;
+			document.getElementById('companyId').value = '';
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+  </head>
+  <body>
+    <h2 style="color:purple"> Delete Company By Id </h2>
+	<label for="companyId"><b>Company Id:</b> </label>
+	<input type="text" id="companyId" name="companyId">
+	<button onclick="deleteCompany(document.getElementById('companyId').value)">Delete</button></br></br>
+    <div id="deleteCompanyInfo"> </div>
+  </body>
+</html>
