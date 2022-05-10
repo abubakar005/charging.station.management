@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title> Delete Station </title>
+    <meta charset="UTF-8">
+    <script>
+      var baseurl = "http://localhost:8080/api/v1/station/";
+      function deleteStation(stationId){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("DELETE", baseurl + stationId, true);
+		
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.status === 204){
+            document.getElementById("deleteStationInfo").innerHTML = "Station deleted successfully with Id " + stationId;
+			document.getElementById('stationId').value = '';
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+  </head>
+  <body>
+    <h2 style="color:purple"> Delete Company By Id </h2>
+	<label for="stationId"><b>Station Id:</b> </label>
+	<input type="text" id="stationId" name="stationId">
+	<button onclick="deleteStation(document.getElementById('stationId').value)">Delete</button></br></br>
+    <div id="deleteStationInfo"> </div>
+  </body>
+</html>

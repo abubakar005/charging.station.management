@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title> Get Station </title>
+    <meta charset="UTF-8">
+    <script>
+      var baseurl = "http://localhost:8080/api/v1/station/";
+      function loadStation(stationId){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.open("GET", baseurl + stationId, true);
+		
+        xmlhttp.onreadystatechange = function() {
+          if(xmlhttp.status === 200){
+            var station = JSON.parse(xmlhttp.responseText);
+            var tbltop = `<table>
+			   <tr> <th> Id </th><th> Station Name </th><th> Latitude </th><th> Longitude </th><th> Company Id </th></tr>`;
+            var main ="";
+            main += "<tr><td>"+station.id+"</td><td>"+station.name+"</td><td>"+station.latitude+"</td><td>"+station.longitude+"</td><td>"+station.company.id+"</td></tr>";
+            var tblbottom = "</table>";
+            var tbl = tbltop + main + tblbottom;
+            document.getElementById("getCompanyInfo").innerHTML = tbl;
+			document.getElementById('stationId').value = '';
+          }
+        };
+        xmlhttp.send();
+      }
+    </script>
+  </head>
+  <body>
+    <h2 style="color:purple"> Get Station By Id </h2>
+	<label for="stationId"><b>Station Id:</b> </label>
+	<input type="text" id="stationId" name="stationId">
+	<button onclick="loadStation(document.getElementById('stationId').value)">Get</button></br></br>
+    <div id="getCompanyInfo"> </div>
+  </body>
+</html>
