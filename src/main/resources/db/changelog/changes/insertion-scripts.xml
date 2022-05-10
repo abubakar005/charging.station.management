@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <!-- Creating companies -->
+    <changeSet author="Abubakar" id="101">
+        <insert tableName="company">
+            <column name="name" value="Company 1"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="company">
+            <column name="name" value="Company 2"/>
+            <column name="parent_company_id" value="1"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="company">
+            <column name="name" value="Company 3"/>
+            <column name="parent_company_id" value="2"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+    </changeSet>
+
+    <!-- Creating stations -->
+    <changeSet author="Abubakar" id="102">
+        <insert tableName="station">
+            <column name="name" value="Station 1"/>
+            <column name="latitude" value="52.364799"/>
+            <column name="longitude" value="4.908971"/>
+            <column name="company_id" value="1"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="station">
+            <column name="name" value="Station 2"/>
+            <column name="latitude" value="52.3681563"/>
+            <column name="longitude" value="4.9010029"/>
+            <column name="company_id" value="1"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="station">
+            <column name="name" value="Station 3"/>
+            <column name="latitude" value="52.379577"/>
+            <column name="longitude" value="4.633547"/>
+            <column name="company_id" value="1"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="station">
+            <column name="name" value="Station 4"/>
+            <column name="latitude" value="52.3756755"/>
+            <column name="longitude" value="4.8668628"/>
+            <column name="company_id" value="2"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="station">
+            <column name="name" value="Station 5"/>
+            <column name="latitude" value="52.380936"/>
+            <column name="longitude" value="4.8708297"/>
+            <column name="company_id" value="2"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+
+        <insert tableName="station">
+            <column name="name" value="Station 6"/>
+            <column name="latitude" value="52.3773989"/>
+            <column name="longitude" value="4.8846443"/>
+            <column name="company_id" value="3"/>
+            <column name="created_on" valueDate="CURRENT_TIMESTAMP()"/>
+            <column name="created_by" value="System"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
