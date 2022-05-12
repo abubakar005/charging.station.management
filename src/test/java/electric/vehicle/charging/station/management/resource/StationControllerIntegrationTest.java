@@ -104,4 +104,12 @@ class StationControllerIntegrationTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    @DisplayName("When stations are requested within distance then they are all returned")
+    void getStationsWithinDistance() throws Exception {
+        this.mockMvc
+                .perform(get("/api/v1/station/search/all-stations-within-radius?latitude=52.3756755&longitude=4.8668628&distance=50"))
+                .andExpect(status().is2xxSuccessful());
+    }
 }

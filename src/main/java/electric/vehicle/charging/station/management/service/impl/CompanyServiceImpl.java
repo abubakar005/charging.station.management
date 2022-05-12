@@ -1,5 +1,6 @@
 package electric.vehicle.charging.station.management.service.impl;
 
+import electric.vehicle.charging.station.management.converter.CompanyConverter;
 import electric.vehicle.charging.station.management.dto.NewCompanyRequestDto;
 import electric.vehicle.charging.station.management.dto.UpdateCompanyRequestDto;
 import electric.vehicle.charging.station.management.enums.Error;
@@ -21,11 +22,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
+    @Autowired
+    private CompanyConverter companyConverter;
+
     @Override
     public Company createNewCompany(NewCompanyRequestDto request) {
 
-        Company company = new Company();
-        NewCompanyRequestDtoToCompany(company, request);
+        Company parent = null;
 
         Optional<Long> parentCompanyId = Optional.ofNullable(request.getParentCompanyId());
 
@@ -35,8 +38,11 @@ public class CompanyServiceImpl implements CompanyService {
             if(!parentCompany.isPresent())
                 throw new ElementNotFoundException(Error.PARENT_COMPANY_NOT_FOUND.getCode(), String.format(Error.PARENT_COMPANY_NOT_FOUND.getMsg(), parentCompanyId.get()));
 
-            company.setParentCompany(parentCompany.get());
+            parent = parentCompany.get();
         }
+
+        Company company = companyConverter.NewCompanyRequestDtoToCompany(request);
+        company.setParentCompany(parent);
 
         return companyRepository.save(company);
     }
@@ -79,7 +85,7 @@ public class CompanyServiceImpl implements CompanyService {
                 throw new ElementNotFoundException(Error.PARENT_NOT_ALLOWED.getCode(), Error.PARENT_NOT_ALLOWED.getMsg());
         }
 
-        UpdateCompanyRequestDtoToCompany(company, request, parent);
+        company = companyConverter.UpdateCompanyRequestDtoToCompany(company, request, parent);
         companyRepository.save(company);
 
         return company;
