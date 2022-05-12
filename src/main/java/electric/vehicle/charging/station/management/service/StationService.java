@@ -10,7 +10,7 @@ import java.util.List;
 public interface StationService {
 
     Station createNewStation(NewStationRequestDto request);
-    Station updateNewStation(UpdateStationRequestDto request);
+    Station updateStation(UpdateStationRequestDto request);
     Station getStationById(Long id);
     List<Station> getAllStations();
     void deleteStationById(Long id);

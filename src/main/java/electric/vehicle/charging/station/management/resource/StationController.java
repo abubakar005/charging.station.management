@@ -28,7 +28,7 @@ public class StationController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Station updateStation(@RequestBody UpdateStationRequestDto requestDto) {
-        return stationService.updateNewStation(requestDto);
+        return stationService.updateStation(requestDto);
     }
 
     @GetMapping("/{id}")

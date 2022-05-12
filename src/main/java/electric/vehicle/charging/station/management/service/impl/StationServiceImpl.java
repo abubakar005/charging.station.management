@@ -1,5 +1,6 @@
 package electric.vehicle.charging.station.management.service.impl;
 
+import electric.vehicle.charging.station.management.converter.StationConverter;
 import electric.vehicle.charging.station.management.dto.CompanyStationDto;
 import electric.vehicle.charging.station.management.dto.NewStationRequestDto;
 import electric.vehicle.charging.station.management.dto.StationDto;
@@ -28,23 +29,25 @@ public class StationServiceImpl implements StationService {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private StationConverter stationConverter;
+
     @Override
     public Station createNewStation(NewStationRequestDto request) {
-
-        Station station = new Station();
-        newStationRequestDtoToStation(station, request);
 
         Company company = companyService.getCompanyById(request.getCompanyId());
 
         if(company == null)
             throw new ElementNotFoundException(Error.COMPANY_NOT_FOUND.getCode(), String.format(Error.COMPANY_NOT_FOUND.getMsg(), request.getCompanyId()));
 
+        Station station = stationConverter.newStationRequestDtoToStation(request);
         station.setCompany(company);
+
         return stationRepository.save(station);
     }
 
     @Override
-    public Station updateNewStation(UpdateStationRequestDto request) {
+    public Station updateStation(UpdateStationRequestDto request) {
 
         Station station = getStationById(request.getId());
         Company company = companyService.getCompanyById(request.getCompanyId());
@@ -52,7 +55,7 @@ public class StationServiceImpl implements StationService {
         if(company == null)
             throw new ElementNotFoundException(Error.COMPANY_NOT_FOUND.getCode(), String.format(Error.COMPANY_NOT_FOUND.getMsg(), request.getCompanyId()));
 
-        updateStationRequestDtoToStation(station, request, company);
+        station = stationConverter.updateStationRequestDtoToStation(station, request, company);
         stationRepository.save(station);
 
         return station;
