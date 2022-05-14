@@ -177,6 +177,9 @@ Need to run in the following commands in the same order (from the directory .src
 	To check the internal IP of the service
 		-> get nodes -o wide
 		-> minikube service service-name --url
+		
+	To get the external IP (using type = LoadBalancer)	
+	    -> minikube tunnel      (in a separate terminal)
 
 12. To setup the kubernetes dashboard
 

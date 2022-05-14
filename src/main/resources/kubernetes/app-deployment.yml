@@ -1,29 +1,12 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: charging-station-management
-  labels:
-    name: charging-station-management
-spec:
-  ports:
-    - nodePort: 30163
-      port: 8080
-      targetPort: 8080
-      protocol: TCP
-  selector:
-    app: charging-station-management
-  type: NodePort
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: charging-station-management
+  name: charging-station-management-deployment
 spec:
   selector:
     matchLabels:
       app: charging-station-management
-  replicas: 2
+  replicas: 3
   template:
     metadata:
       labels:
@@ -55,3 +38,19 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: postgres_password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: charging-station-management-svc
+  labels:
+    name: charging-station-management
+spec:
+  ports:
+    - nodePort: 30163
+      port: 8080
+      targetPort: 8080
+      protocol: "TCP"
+  selector:
+    app: charging-station-management
+  type: LoadBalancer

@@ -12,11 +12,9 @@ import electric.vehicle.charging.station.management.model.Station;
 import electric.vehicle.charging.station.management.repository.StationRepository;
 import electric.vehicle.charging.station.management.service.CompanyService;
 import electric.vehicle.charging.station.management.service.StationService;
-import electric.vehicle.charging.station.management.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -98,7 +96,6 @@ public class StationServiceImpl implements StationService {
             stationList = new ArrayList<>();
             companyStationDto.setId(company.getId());
             companyStationDto.setName(company.getName());
-            companyStationDtoList.add(companyStationDto);
 
             List<Station> li = stations.stream()
                     .filter(station-> station.getCompany().getId() == company.getId())
@@ -133,26 +130,13 @@ public class StationServiceImpl implements StationService {
                 stationList.add(stationDto);
             }
 
-            companyStationDto.getStations().addAll(stationList);
+            // Adding the company which has any station in the list
+            if(stationList.size() > 0) {
+                companyStationDto.getStations().addAll(stationList);
+                companyStationDtoList.add(companyStationDto);
+            }
         }
 
         return companyStationDtoList;
-    }
-
-    private void newStationRequestDtoToStation(Station station, NewStationRequestDto request) {
-        station.setName(request.getName());
-        station.setLatitude(request.getLatitude());
-        station.setLongitude(request.getLongitude());
-        station.setCreatedBy(Constants.SYSTEM_USER);
-        station.setCreationDate(LocalDateTime.now());
-    }
-
-    private void updateStationRequestDtoToStation(Station station, UpdateStationRequestDto requestDto, Company company) {
-        station.setName(requestDto.getName());
-        station.setLatitude(requestDto.getLatitude());
-        station.setLongitude(requestDto.getLongitude());
-        station.setCompany(company);
-        station.setUpdatedBy(Constants.SYSTEM_USER);
-        station.setUpdatedDate(LocalDateTime.now());
     }
 }

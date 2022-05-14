@@ -8,11 +8,9 @@ import electric.vehicle.charging.station.management.exception.ElementNotFoundExc
 import electric.vehicle.charging.station.management.model.Company;
 import electric.vehicle.charging.station.management.repository.CompanyRepository;
 import electric.vehicle.charging.station.management.service.CompanyService;
-import electric.vehicle.charging.station.management.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,18 +92,5 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<Company> getChildsByParentId(long parentCompanyId) {
         return companyRepository.findByParentCompanyId(parentCompanyId);
-    }
-
-    private void NewCompanyRequestDtoToCompany(Company company, NewCompanyRequestDto request) {
-        company.setName(request.getName());
-        company.setCreatedBy(Constants.SYSTEM_USER);
-        company.setCreationDate(LocalDateTime.now());
-    }
-
-    private void UpdateCompanyRequestDtoToCompany(Company company, UpdateCompanyRequestDto request, Company parent) {
-        company.setName(request.getName());
-        company.setParentCompany(parent);
-        company.setUpdatedBy(Constants.SYSTEM_USER);
-        company.setUpdatedDate(LocalDateTime.now());
     }
 }
