@@ -5,7 +5,7 @@ name: Charging Station Management Deployment - Heroku
 
 on:
   push:
-    branches: [ feature/github-actions ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
