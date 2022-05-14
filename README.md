@@ -191,4 +191,12 @@ All pods related configurations are in the yml files which will be used for depl
 
 12. To setup the kubernetes dashboard
 
-	-> minikube dashboard  (it will generate the dashboard url)		
+	-> minikube dashboard  (it will generate the dashboard url)	
+	
+# Heroku Deployment
+
+I have also added configurations for auto deployment on **Heroku cloud** using the **Github actions** pipeline. Every time project will be auto deploy on every commit in the main branch
+
+Swagger URL on Heroku Cloud: https://station-management.herokuapp.com/swagger-ui/index.html#/
+
+**NOTE:** Application is deployed on Heroku cloud, APIs are accesible.
