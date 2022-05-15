@@ -24,6 +24,8 @@ Run application
 8. Kubernetes
 9. PostgreSQL database
 10. PgAdmin database UI
+11. Github Actions (Automatic Deployment using Pipeline)
+12. Heroku (Cloud)
 
 # Information of deployment on Docker containers
 Docker compose file is available in the project root directory, which will deploy the following containers
